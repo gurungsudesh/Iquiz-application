@@ -1,8 +1,15 @@
 package quiz;
 import javax.swing.*;
 import java.awt.*;
-public class registerPage {
+import java.awt.event.*;
+import java.sql.*;
+public class registerPage implements ActionListener{
 	JFrame frm = new JFrame(); 
+	Button register;
+	TextField usr_name,p_word,email;
+	//JDC connection
+	Statement stmt;
+	Connection conn;
 	
 	registerPage(){
 		frm.setVisible(true);
@@ -19,27 +26,28 @@ public class registerPage {
 		
 		Panel pl2 = new Panel();
 		Label uname = new Label("Username: ");
-		TextField usr_name = new TextField(20);
+		 usr_name = new TextField(20);
 		pl2.add(uname);
 		pl2.add(usr_name);
 		frm.add(pl2);
 		
 		Panel pl3 = new Panel();
 		Label pword = new Label("Password: ");
-		TextField p_word = new TextField(20);
+		p_word = new TextField(20);
 		pl3.add(pword);
 		pl3.add(p_word);
 		frm.add(pl3);
 		
 		Panel pl4 = new Panel();
 		Label e_mail = new Label("Email: ");
-		TextField email = new TextField(20);
+		email = new TextField(20);
 		pl4.add(e_mail);
 		pl4.add(email);
 		frm.add(pl4);
 		
 		Panel pl5= new Panel();
-		Button register = new Button("Register");
+		 register = new Button("Register");
+		register.addActionListener(this);
 		Button lgn = new Button("Login");
 		pl5.add(register);
 		pl5.add(lgn);
@@ -48,5 +56,32 @@ public class registerPage {
 	public static void main(String[] args) {
 		registerPage reg = new registerPage();
 
+	}
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==register) {
+			try {
+				String uname,password,e_mail;
+				uname = usr_name.getText();
+				//System.out.println(uname);
+				password = p_word.getText();
+				e_mail = email.getText();
+				
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				String url = "jdbc:mysql://localhost:8080/Quiz/";
+				Connection conn = DriverManager.getConnection(url, "root", "");
+				System.out.println("Connected");
+				//stmt = conn.createStatement();
+				//stmt.executeQuery("INSERT INTO Users ( Username,Password,Email) VALUES ('"+uname+"','"+password+"','"+e_mail+"')");
+				conn.close();
+				
+				
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			
+			
+			
+		}
 	}
 }
