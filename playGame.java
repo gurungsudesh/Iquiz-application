@@ -6,30 +6,30 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class playGame implements ActionListener{
-	JFrame pg = new JFrame();
-	
+public class playGame extends JFrame implements ActionListener{
+
+	Button start;
 	playGame(){
-		pg.setVisible(true);
-		pg.setTitle("IQuiz?");
-		pg.setLayout(new GridLayout(10,10));
-		pg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pg.setSize(800,500);
+		setVisible(true);
+		setTitle("IQuiz?");
+		setLayout(new GridLayout(10,10));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,500);
 		
 		Panel pa1 = new Panel();
 		Label play = new Label("Welcome: ");
-		TextField uname = new TextField(40);
+		Label uname = new Label("username");
 		pa1.add(play);
 		pa1.add(uname);
-		pg.add(pa1);
+		add(pa1);
 		
 		Panel pa2 = new Panel();
-		Button start = new Button("Play Game");
+		start = new Button("Play Game");
 		start.addActionListener(this);
 		
 	
 		pa2.add(start);
-		pg.add(pa2);
+		add(pa2);
 		
 		
 	}
@@ -37,6 +37,11 @@ public class playGame implements ActionListener{
 		playGame obj = new playGame();
 	}
 	public void actionPerformed(ActionEvent ae) {
-		
+		if(ae.getSource()== start) {
+			setVisible(false);
+			question frame = new question();
+			frame.setVisible(true);
+			
+		}
 	}
 }
