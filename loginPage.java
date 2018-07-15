@@ -6,17 +6,18 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.*;
-public class loginPage implements ItemListener,ActionListener{
-	JFrame f = new JFrame();
+public class loginPage extends JFrame implements ActionListener,ItemListener{
+
 	Button lgn_button,regr_button;
 	Choice items;
+	String table;
 	loginPage(){
-		f.setSize(800,500);
-		f.setVisible(true);
-		f.setTitle("Iquiz?");
-		f.setLayout(new GridLayout(10,10));
-		f.setBackground(Color.BLUE);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800,500);
+		setVisible(true);
+		setTitle("Iquiz?");
+		setLayout(new GridLayout(10,10));
+		setBackground(Color.BLUE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		
@@ -28,8 +29,9 @@ public class loginPage implements ItemListener,ActionListener{
 		
 		Panel p6 = new Panel();
 		Label category = new Label("Select a category: ");
-		Choice items = new Choice();
+		items = new Choice();
 		items.addItemListener(this);
+		items.add("");
 		items.add("User");
 		items.add("Admin");
 		p6.add(category);
@@ -55,20 +57,20 @@ public class loginPage implements ItemListener,ActionListener{
 		
 		
 		Panel p5 = new Panel();
-		Button lgn_button = new Button("Login");
+		lgn_button = new Button("Login");
 		lgn_button.addActionListener(this);
 		p5.add(lgn_button);
-		Button regr_button = new Button("Register");
+		regr_button = new Button("Register");
 		regr_button.addActionListener(this);
 		p5.add(regr_button);
 		
 		
-		f.add(p1);
-		f.add(p6);
-		f.add(p2);
-		f.add(p3);
-		f.add(p4);
-		f.add(p5);
+		add(p1);
+		add(p6);
+		add(p2);
+		add(p3);
+		add(p4);
+		add(p5);
 		
 	
 		
@@ -78,30 +80,62 @@ public class loginPage implements ItemListener,ActionListener{
 	public static void main(String[] args) {
 		loginPage lp = new loginPage();
 	}
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==lgn_button) {
+
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()== lgn_button) {
+			try {
+				if(table == "User") {
+					setVisible(false);
+					playGame obj = new playGame();
+					obj.setVisible(true);
+					//System.out.println("login Button clicked");
+				}
+				else {
+					setVisible(false);
+					adminPage frame = new adminPage();
+					frame.setVisible(true);
+					
+				}
+				
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			
+			
 			
 		}
-		if(e.getSource()==regr_button) {
+		if(ae.getSource()== regr_button) {
+			try {
+				setVisible(false);
+				
+				registerPage reg = new registerPage();
+				reg.setVisible(true);
+				System.out.println("Button clicked");
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
 			
-		}
 		
+		}
 	}
+
 	public void itemStateChanged(ItemEvent ie) {
 		
 		if(ie.getSource()== items) {
 			
-		try {
-			String table= "";
-			table += items.getSelectedItem();
-			System.out.println(table);
-			
-		}
-		catch(Exception ex) {
-			System.out.println(ex);
-		}
+			try {
+				
+				table = items.getSelectedItem();
+				System.out.println(table);
+				
+			}
+			catch(Exception ex) {
+				System.out.println(ex);
+			}
 		
 		
-	}
+		}
 	}
 }
